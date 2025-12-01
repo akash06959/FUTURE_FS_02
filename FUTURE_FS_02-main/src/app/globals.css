@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+body {
+  @apply bg-slate-50 text-ink font-sans antialiased;
+}
+
+::selection {
+  @apply bg-brand-200 text-brand-900;
+}
+
+.glass-panel {
+  @apply bg-white/80 backdrop-blur-lg shadow-soft;
+}
