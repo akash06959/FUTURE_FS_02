@@ -51,9 +51,9 @@ export default function HeroCarousel() {
   useEffect(() => {
     const timer = setInterval(() => {
       nextSlide()
-    }, 6000)
+    }, 3000) // <--- This value is in milliseconds (6000ms = 6s)
     return () => clearInterval(timer)
-  }, [nextSlide, currentIndex]) 
+  }, [nextSlide, currentIndex])
 
   return (
     <div className="container mx-auto px-4 py-8 mt-20">
@@ -89,13 +89,14 @@ export default function HeroCarousel() {
               </motion.div>
             </AnimatePresence>
 
-            <div className="absolute bottom-8 left-8 md:left-20 flex gap-3 z-20">
+            {/* --- MODIFIED INDICATORS (Small Size) --- */}
+            <div className="absolute bottom-8 left-8 md:left-20 flex gap-2 z-20">
               {slides.map((_, index) => (
                 <button
                   key={index}
                   onClick={() => setCurrentIndex(index)}
-                  className={`h-1.5 rounded-full transition-all duration-500 ${
-                    index === currentIndex ? `w-12 bg-black/80` : `w-3 bg-black/20 hover:bg-black/40`
+                  className={`h-1 rounded-full transition-all duration-500 ${
+                    index === currentIndex ? `w-6 bg-black/80` : `w-2 bg-black/20 hover:bg-black/40`
                   }`}
                   aria-label={`Go to slide ${index + 1}`}
                 />
@@ -116,6 +117,7 @@ export default function HeroCarousel() {
                 <img
                   src={slides[currentIndex].image}
                   alt={slides[currentIndex].title}
+                  // Using optimized image sizing: contain on mobile, cover on desktop
                   className="h-full w-full object-contain lg:object-cover object-center"
                 />
               </motion.div>
