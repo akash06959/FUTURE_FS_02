@@ -4,13 +4,27 @@ import { useWishlist } from '@/context/WishlistContext'
 import { useCart } from '@/context/CartContext'
 import Link from 'next/link'
 import { Trash2, ShoppingBag } from 'lucide-react'
+import { toast } from 'sonner' // ADDED: Import toast
 
 export default function WishlistPage() {
   const { wishlist, removeFromWishlist } = useWishlist()
   const { addToCart } = useCart()
 
+  // ADDED: Handler for notification on removal
+  const handleRemove = (productId: number, productName: string) => {
+    removeFromWishlist(productId);
+    toast.error(`Removed ${productName} from wishlist.`, { duration: 2000 });
+  }
+
+  // ADDED: Handler for moving to cart and notifying
+  const handleAddToCartAndNotify = (product: any) => {
+    addToCart(product);
+    // Remove from wishlist (optional, but standard UX for "Move to Cart")
+    removeFromWishlist(product.id); 
+    toast.success(`Moved ${product.name} to cart!`, { duration: 2500 });
+  }
+
   return (
-    // UPDATED: Added 'mt-20' for proper spacing from navbar
     <div className="container mx-auto px-4 py-12 mt-20 max-w-5xl">
       <h1 className="text-3xl font-extrabold text-gray-900 mb-8">My Wishlist ({wishlist.length})</h1>
 
@@ -29,7 +43,8 @@ export default function WishlistPage() {
               <div className="relative aspect-[4/3] bg-gray-100">
                 <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
                 <button 
-                  onClick={() => removeFromWishlist(product.id)}
+                  // UPDATED: Use handler
+                  onClick={() => handleRemove(product.id, product.name)}
                   className="absolute top-3 right-3 p-2 bg-white/90 rounded-full text-gray-400 hover:text-red-500 transition-colors shadow-sm"
                   title="Remove"
                 >
@@ -44,7 +59,8 @@ export default function WishlistPage() {
                 <div className="flex items-center justify-between">
                   <span className="text-lg font-bold text-gray-900">${product.price}</span>
                   <button 
-                    onClick={() => addToCart(product)}
+                    // UPDATED: Use handler
+                    onClick={() => handleAddToCartAndNotify(product)}
                     className="flex items-center gap-2 bg-black text-white px-4 py-2 rounded-full text-xs font-bold hover:bg-gray-800 transition-colors"
                   >
                     <ShoppingBag size={14} /> Add to Cart

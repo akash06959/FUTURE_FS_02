@@ -12,6 +12,7 @@ import {
   Truck,
 } from 'lucide-react'
 import { useCart } from '@/context/CartContext'
+import { toast } from 'sonner' // ADDED: Import toast
 
 const checkoutSteps = ['Cart', 'Details', 'Payment', 'Done']
 
@@ -26,9 +27,25 @@ export default function Cart() {
   const tax = subtotal * 0.08
   const total = subtotal + tax + shipping
 
+  // ADDED: Handler to notify on removal
+  const handleRemove = (productId: number, productName: string) => {
+    removeFromCart(productId);
+    toast.error(`Removed ${productName} from cart.`, { duration: 2000 });
+  }
+  
+  // ADDED: Handler to notify on quantity change
+  const handleUpdateQuantity = (productId: number, productName: string, newQuantity: number) => {
+    if (newQuantity <= 0) {
+      updateQuantity(productId, newQuantity);
+      toast.error(`Removed ${productName} from cart.`, { duration: 2000 });
+    } else {
+      updateQuantity(productId, newQuantity);
+      toast.info(`Updated quantity of ${productName} to ${newQuantity}.`, { duration: 1500 });
+    }
+  }
+
   if (cart.length === 0) {
     return (
-      // Added mt-20 here
       <div className="container mt-20 py-16">
         <div className="glass-panel flex flex-col items-center rounded-3xl p-12 text-center">
           <div className="mb-6 rounded-full bg-brand-50 p-6 text-brand-600">
@@ -50,7 +67,6 @@ export default function Cart() {
   }
 
   return (
-    // Added mt-20 here
     <div className="container mt-20 py-12">
       <div className="mb-8 grid gap-3 md:grid-cols-4">
         {checkoutSteps.map((step, index) => {
@@ -106,7 +122,8 @@ export default function Cart() {
                 <div className="flex flex-col items-end gap-3 sm:flex-row sm:items-center">
                   <div className="flex items-center rounded-full border border-slate-200 bg-white px-3 py-1">
                     <button
-                      onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                      // UPDATED: Use handler
+                      onClick={() => handleUpdateQuantity(item.id, item.name, item.quantity - 1)}
                       className="p-1 text-slate-500 transition hover:text-brand-600"
                       aria-label="Decrease quantity"
                     >
@@ -116,7 +133,8 @@ export default function Cart() {
                       {item.quantity}
                     </span>
                     <button
-                      onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                      // UPDATED: Use handler
+                      onClick={() => handleUpdateQuantity(item.id, item.name, item.quantity + 1)}
                       className="p-1 text-slate-500 transition hover:text-brand-600"
                       aria-label="Increase quantity"
                     >
@@ -124,7 +142,8 @@ export default function Cart() {
                     </button>
                   </div>
                   <button
-                    onClick={() => removeFromCart(item.id)}
+                    // UPDATED: Use handler
+                    onClick={() => handleRemove(item.id, item.name)}
                     className="inline-flex items-center gap-1 rounded-full border border-red-100 px-3 py-1 text-xs font-semibold text-red-500 transition hover:bg-red-50"
                   >
                     <Trash2 className="h-3.5 w-3.5" />

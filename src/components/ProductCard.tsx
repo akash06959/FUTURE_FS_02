@@ -6,6 +6,7 @@ import { Star, Heart } from 'lucide-react'
 import { useCart } from '@/context/CartContext'
 import { useWishlist } from '@/context/WishlistContext'
 import { useRouter } from 'next/navigation'
+import { toast } from 'sonner' // ADDED: Import toast
 
 interface ProductCardProps {
   product: Product
@@ -21,14 +22,26 @@ export default function ProductCard({ product }: ProductCardProps) {
   const toggleWishlist = () => {
     if (isWishlisted) {
       removeFromWishlist(product.id)
+      // ADDED: Toast for removal
+      toast.error(`Removed ${product.name} from wishlist.`, { duration: 2000 })
     } else {
       addToWishlist(product)
+      // ADDED: Toast for addition
+      toast.success(`Added ${product.name} to wishlist!`, { duration: 2000 })
     }
+  }
+
+  const handleAddToCart = () => {
+    addToCart(product, 1)
+    // ADDED: Toast for addition
+    toast.success(`1 x ${product.name} added to cart!`, { duration: 2000 });
   }
 
   const handleBuyNow = () => {
     addToCart(product)
-    router.push('/checkout')
+    // UPDATED: Show toast and delay redirect
+    toast.success(`Added 1 x ${product.name} to cart. Redirecting...`, { duration: 1500 });
+    setTimeout(() => router.push('/checkout'), 1500); 
   }
 
   const colors = ['bg-black', 'bg-blue-800', 'bg-gray-400']
@@ -116,28 +129,28 @@ export default function ProductCard({ product }: ProductCardProps) {
          </div>
 
          <div className="flex flex-col gap-2 mt-3">
-        <button
-              onClick={() => addToCart(product)}
-              className="w-full bg-[#FFD814] hover:bg-[#F7CA00] text-black border border-[#FCD200] py-2 rounded-full text-xs font-bold shadow-sm transition-colors"
-        >
-          Add to Cart
-        </button>
-            <button 
-              onClick={handleBuyNow}
-              className="w-full bg-[#FFA41C] hover:bg-[#FA8900] text-black border border-[#FF8F00] py-2 rounded-full text-xs font-bold shadow-sm transition-colors"
-            >
-              Buy Now
-            </button>
+          <button
+            onClick={handleAddToCart} // Using custom handler
+            className="w-full bg-[#FFD814] hover:bg-[#F7CA00] text-black border border-[#FCD200] py-2 rounded-full text-xs font-bold shadow-sm transition-colors"
+          >
+            Add to Cart
+          </button>
+          <button 
+            onClick={handleBuyNow} // Using custom handler
+            className="w-full bg-[#FFA41C] hover:bg-[#FA8900] text-black border border-[#FF8F00] py-2 rounded-full text-xs font-bold shadow-sm transition-colors"
+          >
+            Buy Now
+          </button>
             
-            <button 
-              onClick={toggleWishlist}
-              className={`flex items-center justify-center gap-2 text-sm transition-colors py-1 ${
-                isWishlisted ? 'text-rose-500' : 'text-gray-400 hover:text-rose-500'
-              }`}
-            >
-                <Heart size={16} fill={isWishlisted ? "currentColor" : "none"} /> 
-                <span className="font-medium">{isWishlisted ? 'Saved' : 'Save'}</span>
-            </button>
+          <button 
+            onClick={toggleWishlist}
+            className={`flex items-center justify-center gap-2 text-sm transition-colors py-1 ${
+              isWishlisted ? 'text-rose-500' : 'text-gray-400 hover:text-rose-500'
+            }`}
+          >
+            <Heart size={16} fill={isWishlisted ? "currentColor" : "none"} /> 
+            <span className="font-medium">{isWishlisted ? 'Saved' : 'Save'}</span>
+          </button>
          </div>
       </div>
     </div>

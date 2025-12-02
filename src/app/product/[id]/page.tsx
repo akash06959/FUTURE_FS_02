@@ -1,16 +1,12 @@
 'use client'
 
 import { useState } from 'react'
-
 import { products } from "@/data/products";
-
 import { useCart } from '@/context/CartContext'
-
 import { Star, Heart, Share2, Truck, ShieldCheck, ArrowLeft, Minus, Plus, ShoppingBag, Check } from 'lucide-react'
-
 import Link from "next/link";
-
 import { useRouter } from 'next/navigation'
+import { toast } from 'sonner' // ADDED: Import toast
 
 export default function ProductDetailsPage({ params }: { params: { id: string } }) {
   const { addToCart } = useCart()
@@ -18,19 +14,17 @@ export default function ProductDetailsPage({ params }: { params: { id: string } 
   
   const product = products.find((p) => p.id === parseInt(params.id));
 
-  // 1. PREPARE SAFE DEFAULTS (So hooks can run even if product is undefined)
+  // Safe defaults for hooks (must be called before return)
   const availableColors = product?.colorImages ? Object.keys(product.colorImages) : []
   const defaultColor = availableColors[0] || ''
   const defaultImage = (product?.colorImages && product.colorImages[availableColors[0]]) || product?.image || ''
 
-  // 2. CALL ALL HOOKS (Must happen before any return statement)
   const [quantity, setQuantity] = useState(1)
   const [selectedSize, setSelectedSize] = useState('M')
   const [selectedColor, setSelectedColor] = useState(defaultColor)
   const [selectedImage, setSelectedImage] = useState(defaultImage)
   const [activeTab, setActiveTab] = useState<'description' | 'reviews' | 'shipping'>('description')
 
-  // 3. NOW WE CAN RETURN EARLY
   if (!product) return <div className="min-h-[50vh] flex items-center justify-center">Product not found</div>;
 
   const sizes = ['S', 'M', 'L', 'XL', 'XXL']
@@ -44,12 +38,20 @@ export default function ProductDetailsPage({ params }: { params: { id: string } 
 
   const handleAddToCart = () => {
     addToCart(product, quantity)
-    alert(`Added ${quantity} ${product.name} (${selectedColor}, ${selectedSize})`) 
+    // UPDATED: Replaced alert with toast
+    toast.success(`${quantity} x ${product.name} added to cart!`, {
+      description: 'You can check out now or continue shopping.',
+      duration: 3000
+    });
   }
 
   const handleBuyNow = () => {
     addToCart(product, quantity)
-    router.push('/checkout')
+    // UPDATED: Show toast and delay redirect
+    toast.success(`Added ${quantity} x ${product.name} to cart. Redirecting to checkout...`, {
+      duration: 1500
+    });
+    setTimeout(() => router.push('/checkout'), 1500); 
   }
 
   const handleColorSelect = (color: string) => {
