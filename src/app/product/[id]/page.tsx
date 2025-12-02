@@ -94,8 +94,8 @@ export default function ProductDetailsPage({ params }: { params: { id: string } 
                         <img 
                           src={selectedImage}
                           alt={product.name} 
-                          // UPDATED: Fade from left (transparent) to right (opaque)
-                          className="w-full h-full object-contain lg:object-cover transition-opacity duration-300 mix-blend-multiply [mask-image:linear-gradient(to_right,transparent,black_20%)]"
+                          // UPDATED: Removed mask-image class. Kept mix-blend-multiply.
+                          className="w-full h-full object-contain lg:object-cover transition-opacity duration-300 mix-blend-multiply"
                         />
                         <button className="absolute top-4 right-4 p-2.5 bg-white rounded-full shadow-sm hover:text-red-500 transition-colors z-10">
                             <Heart size={20} />
