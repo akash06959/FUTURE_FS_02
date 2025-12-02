@@ -1,10 +1,15 @@
 'use client'
 
 import { useState } from 'react'
+
 import { products } from "@/data/products";
+
 import { useCart } from '@/context/CartContext'
+
 import { Star, Heart, Share2, Truck, ShieldCheck, ArrowLeft, Minus, Plus, ShoppingBag, Check } from 'lucide-react'
+
 import Link from "next/link";
+
 import { useRouter } from 'next/navigation'
 
 export default function ProductDetailsPage({ params }: { params: { id: string } }) {
@@ -13,20 +18,20 @@ export default function ProductDetailsPage({ params }: { params: { id: string } 
   
   const product = products.find((p) => p.id === parseInt(params.id));
 
-  if (!product) return <div className="min-h-[50vh] flex items-center justify-center">Product not found</div>;
+  // 1. PREPARE SAFE DEFAULTS (So hooks can run even if product is undefined)
+  const availableColors = product?.colorImages ? Object.keys(product.colorImages) : []
+  const defaultColor = availableColors[0] || ''
+  const defaultImage = (product?.colorImages && product.colorImages[availableColors[0]]) || product?.image || ''
 
+  // 2. CALL ALL HOOKS (Must happen before any return statement)
   const [quantity, setQuantity] = useState(1)
   const [selectedSize, setSelectedSize] = useState('M')
-  
-  const availableColors = product?.colorImages ? Object.keys(product.colorImages) : []
-  
-  const [selectedColor, setSelectedColor] = useState(availableColors[0] || '')
-  
-  const [selectedImage, setSelectedImage] = useState(
-    (product?.colorImages && product.colorImages[availableColors[0]]) || product?.image || ''
-  )
-  
+  const [selectedColor, setSelectedColor] = useState(defaultColor)
+  const [selectedImage, setSelectedImage] = useState(defaultImage)
   const [activeTab, setActiveTab] = useState<'description' | 'reviews' | 'shipping'>('description')
+
+  // 3. NOW WE CAN RETURN EARLY
+  if (!product) return <div className="min-h-[50vh] flex items-center justify-center">Product not found</div>;
 
   const sizes = ['S', 'M', 'L', 'XL', 'XXL']
 
@@ -75,6 +80,7 @@ export default function ProductDetailsPage({ params }: { params: { id: string } 
 
   return (
     <div className="container mx-auto px-4 py-8 mt-20 max-w-7xl">
+
         
         <div className="mb-6">
             <Link 
@@ -87,6 +93,7 @@ export default function ProductDetailsPage({ params }: { params: { id: string } 
 
         <div className="bg-white border border-gray-200 rounded-[2rem] p-6 lg:p-10 shadow-sm mb-16">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
+
                 
                 {/* --- IMAGE SECTION --- */}
                 <div>
@@ -94,7 +101,6 @@ export default function ProductDetailsPage({ params }: { params: { id: string } 
                         <img 
                           src={selectedImage}
                           alt={product.name} 
-                          // UPDATED: Removed mask-image class. Kept mix-blend-multiply.
                           className="w-full h-full object-contain lg:object-cover transition-opacity duration-300 mix-blend-multiply"
                         />
                         <button className="absolute top-4 right-4 p-2.5 bg-white rounded-full shadow-sm hover:text-red-500 transition-colors z-10">
@@ -182,6 +188,7 @@ export default function ProductDetailsPage({ params }: { params: { id: string } 
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+
             
             <div className="lg:col-span-2 space-y-8">
                 <div className="border-b border-gray-200">
@@ -228,7 +235,8 @@ export default function ProductDetailsPage({ params }: { params: { id: string } 
                                             </div>
                                             <div className="flex text-amber-400"><Star size={14} fill="currentColor"/><Star size={14} fill="currentColor"/><Star size={14} fill="currentColor"/><Star size={14} fill="currentColor"/><Star size={14} fill="currentColor"/></div>
                                         </div>
-                                        <p className="text-sm text-gray-600">"Absolutely love the quality! It fits perfectly."</p>
+                                        {/* FIX: Escaped quotes here */}
+                                        <p className="text-sm text-gray-600">&quot;Absolutely love the quality! It fits perfectly.&quot;</p>
                                     </div>
                                 ))}
                             </div>

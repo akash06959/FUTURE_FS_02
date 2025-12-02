@@ -130,7 +130,7 @@ function ShopContent() {
             animate={{ opacity: 1, y: 0 }}
             className="text-3xl font-extrabold tracking-tight text-gray-900"
           >
-            {activeGender}'s Collection
+            {activeGender}&apos;s Collection
           </motion.h1>
           <p className="mt-1 text-sm text-gray-500">
             {filteredProducts.length} items found

@@ -10,8 +10,9 @@ export default function PrivacyPolicy() {
         <div className="prose prose-lg prose-gray max-w-none text-gray-600 leading-relaxed">
           <section className="mb-12">
             <h2 className="text-2xl font-bold text-gray-900 mb-4">1. Introduction</h2>
+            {/* FIX: Escaped quotes */}
             <p>
-              Welcome to Apparel Store ("we," "our," or "us"). We are committed to protecting your personal information and your right to privacy. If you have any questions or concerns about this privacy notice or our practices with regard to your personal information, please contact us.
+              Welcome to Apparel Store (&quot;we,&quot; &quot;our,&quot; or &quot;us&quot;). We are committed to protecting your personal information and your right to privacy. If you have any questions or concerns about this privacy notice or our practices with regard to your personal information, please contact us.
             </p>
           </section>
 
