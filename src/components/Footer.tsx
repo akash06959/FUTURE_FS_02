@@ -1,8 +1,10 @@
 'use client'
 
+import { useState } from 'react'
 import Link from 'next/link'
-import { motion } from 'framer-motion'
-import { Facebook, Twitter, Instagram, Linkedin, Sparkles, ArrowRight, Mail } from 'lucide-react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { Facebook, Twitter, Instagram, Linkedin, Sparkles, ArrowRight, Mail, Check, Loader2, AlertCircle } from 'lucide-react'
+import { toast } from 'sonner'
 
 const shopLinks = [
   { label: 'Shirts', href: '/shop?category=Shirts' },
@@ -46,6 +48,46 @@ const itemVariants = {
 }
 
 export default function Footer() {
+  const [email, setEmail] = useState('')
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
+
+  const handleSubscribe = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!email) return
+
+    // Simple validation
+    if (!email.includes('@')) {
+      toast.error('Please enter a valid email address.')
+      return
+    }
+
+    setStatus('loading')
+
+    // 1. Simulate Network Delay (1.5s)
+    await new Promise((resolve) => setTimeout(resolve, 1500))
+
+    // 2. Mock Logic: Check if email is "already subscribed" in local storage
+    const subscribedEmails = JSON.parse(localStorage.getItem('newsletter_subscribers') || '[]')
+    
+    if (subscribedEmails.includes(email)) {
+      setStatus('error')
+      toast.error('This email is already subscribed!')
+      setTimeout(() => setStatus('idle'), 2000)
+      return
+    }
+
+    // 3. Success State
+    subscribedEmails.push(email)
+    localStorage.setItem('newsletter_subscribers', JSON.stringify(subscribedEmails))
+    
+    setStatus('success')
+    toast.success('Welcome to the club! You have successfully subscribed.')
+    setEmail('')
+    
+    // Reset form after 3 seconds
+    setTimeout(() => setStatus('idle'), 3000)
+  }
+
   return (
     <footer className="relative mt-24 overflow-hidden bg-slate-950 pt-20 pb-10 text-slate-200 border-t border-white/5">
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-px bg-gradient-to-r from-transparent via-indigo-500/50 to-transparent" />
@@ -120,6 +162,7 @@ export default function Footer() {
           </ul>
         </motion.div>
 
+        {/* --- NEWSLETTER SECTION --- */}
         <motion.div variants={itemVariants}>
           <h3 className="text-sm font-bold uppercase tracking-widest text-slate-100">
             Stay in the loop
@@ -128,21 +171,44 @@ export default function Footer() {
             Join 25k+ subscribers for early access, design tips, and private sales.
           </p>
           
-          <form className="mt-6 group" onSubmit={(e) => e.preventDefault()}>
+          <form className="mt-6 group relative" onSubmit={handleSubscribe}>
             <div className="relative">
               <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-500 transition-colors group-focus-within:text-indigo-400" />
               <input
                 type="email"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                disabled={status === 'loading' || status === 'success'}
                 placeholder="you@example.com"
-                className="w-full rounded-xl border border-white/10 bg-white/5 pl-10 pr-4 py-3 text-sm text-white placeholder:text-slate-600 focus:border-indigo-500 focus:bg-white/10 focus:outline-none transition-all"
+                className={`w-full rounded-xl border bg-white/5 pl-10 pr-4 py-3 text-sm text-white placeholder:text-slate-600 focus:outline-none transition-all ${
+                  status === 'error' 
+                    ? 'border-red-500/50 focus:border-red-500' 
+                    : 'border-white/10 focus:border-indigo-500 focus:bg-white/10'
+                }`}
               />
             </div>
+            
             <button
               type="submit"
-              className="mt-3 w-full inline-flex items-center justify-center gap-2 rounded-xl bg-indigo-600 py-3 text-sm font-semibold text-white transition-all hover:bg-indigo-500 hover:shadow-lg hover:shadow-indigo-500/20 active:scale-95"
+              disabled={status === 'loading' || status === 'success'}
+              className={`mt-3 w-full inline-flex items-center justify-center gap-2 rounded-xl py-3 text-sm font-semibold text-white transition-all active:scale-95 ${
+                status === 'success' 
+                  ? 'bg-green-600 hover:bg-green-500' 
+                  : 'bg-indigo-600 hover:bg-indigo-500 hover:shadow-lg hover:shadow-indigo-500/20'
+              }`}
             >
-              Subscribe
-              <ArrowRight className="h-4 w-4" />
+              {status === 'loading' ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : status === 'success' ? (
+                <>
+                  Subscribed <Check className="h-4 w-4" />
+                </>
+              ) : (
+                <>
+                  Subscribe <ArrowRight className="h-4 w-4" />
+                </>
+              )}
             </button>
           </form>
         </motion.div>

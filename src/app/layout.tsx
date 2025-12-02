@@ -5,6 +5,7 @@ import CartProvider from "../context/CartContext";
 import WishlistProvider from "../context/WishlistContext"; 
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { Toaster } from "sonner";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -30,6 +31,7 @@ export default function RootLayout({
           </div>
           </WishlistProvider>
         </CartProvider>
+        <Toaster position="top-right" richColors />
       </body>
     </html>
   );
