@@ -74,13 +74,11 @@ export default function ProductDetailsPage({ params }: { params: { id: string } 
   }
 
   return (
-    // FIX 1: Added 'mt-20' here to push content below the fixed navbar
     <div className="container mx-auto px-4 py-8 mt-20 max-w-7xl">
         
         <div className="mb-6">
             <Link 
               href="/shop" 
-              // FIX 2: Added button styles (white bg, border, rounded-full, shadow, hover effect)
               className="inline-flex items-center gap-2 text-sm font-bold text-gray-700 bg-white border border-gray-200 px-4 py-2.5 rounded-full shadow-sm hover:bg-gray-50 hover:text-black hover:shadow-md transition-all active:scale-95"
             >
                 <ArrowLeft size={16} /> Back to Shop
@@ -92,15 +90,14 @@ export default function ProductDetailsPage({ params }: { params: { id: string } 
                 
                 {/* --- IMAGE SECTION --- */}
                 <div>
-                    {/* UPDATED: max-w-[400px] constrains the image width */}
-                    <div className="relative aspect-[3/4] bg-gray-100 rounded-2xl overflow-hidden shadow-inner border border-gray-100 mx-auto max-w-[400px]">
+                    <div className="relative aspect-[3/4] bg-gradient-to-b from-white to-gray-100 rounded-2xl overflow-hidden shadow-inner border border-gray-100 mx-auto max-w-[400px]">
                         <img 
                           src={selectedImage}
                           alt={product.name} 
-                          // Includes mobile optimization (contain) and desktop (cover)
-                          className="w-full h-full object-contain lg:object-cover transition-opacity duration-300"
+                          // UPDATED: Fade from left (transparent) to right (opaque)
+                          className="w-full h-full object-contain lg:object-cover transition-opacity duration-300 mix-blend-multiply [mask-image:linear-gradient(to_right,transparent,black_20%)]"
                         />
-                        <button className="absolute top-4 right-4 p-2.5 bg-white rounded-full shadow-sm hover:text-red-500 transition-colors">
+                        <button className="absolute top-4 right-4 p-2.5 bg-white rounded-full shadow-sm hover:text-red-500 transition-colors z-10">
                             <Heart size={20} />
                         </button>
                     </div>

@@ -8,6 +8,17 @@ import { ArrowRight } from 'lucide-react'
 const slides = [
   {
     id: 1,
+    image: "https://images.pexels.com/photos/3768005/pexels-photo-3768005.jpeg?cs=srgb&dl=pexels-willoworld-3768005.jpg&fm=jpg",
+    title: "Mens Fashion",
+    subtitle: "Functional streetwear engineered for the modern commute.",
+    cta: "Shop For Men",
+    link: "/shop?gender=Men",
+    bgColor: "bg-slate-100",
+    textColor: "text-slate-900",
+    buttonColor: "bg-blue-900 hover:bg-blue-800"
+  },
+  {
+    id: 2,
     image: "https://img.freepik.com/free-photo/three-young-beautiful-smiling-girls-trendy-summer-casual-dresses-sunglasses-sexy-carefree-women-posing_158538-4831.jpg?semt=ais_hybrid&w=740&q=80",
     title: "Summer 2025",
     subtitle: "Lightweight fabrics and bold cuts designed for the heat.",
@@ -18,8 +29,8 @@ const slides = [
     buttonColor: "bg-cyan-600 hover:bg-cyan-500"
   },
   {
-    id: 2,
-    image: "https://assets.gqindia.com/photos/64ad2bb9ca23363cf3f5f9fa/4:3/w_5448,h_4086,c_limit/LEAD.jpg",
+    id: 3,
+    image: "https://images.pexels.com/photos/380782/pexels-photo-380782.jpeg?cs=srgb&dl=pexels-bemistermister-380782.jpg&fm=jpg",
     title: "Essentials",
     subtitle: "Elevate your daily carry with premium leather accents.",
     cta: "Shop Accessories",
@@ -28,17 +39,6 @@ const slides = [
     textColor: "text-slate-900",
     buttonColor: "bg-slate-900 hover:bg-slate-800"
   },
-  {
-    id: 3,
-    image: "https://img.freepik.com/premium-photo/men-s-clothing-hangers-boutique-grouped-by-color-jackets-trousers-shoes-fashion-style_120897-6084.jpg",
-    title: "Urban Utility",
-    subtitle: "Functional streetwear engineered for the modern commute.",
-    cta: "Shop For Men",
-    link: "/shop?gender=Men",
-    bgColor: "bg-slate-100",
-    textColor: "text-slate-900",
-    buttonColor: "bg-blue-900 hover:bg-blue-800"
-  }
 ]
 
 export default function HeroCarousel() {
@@ -51,16 +51,19 @@ export default function HeroCarousel() {
   useEffect(() => {
     const timer = setInterval(() => {
       nextSlide()
-    }, 3000) // <--- This value is in milliseconds (6000ms = 6s)
+    }, 3000)
     return () => clearInterval(timer)
-  }, [nextSlide, currentIndex])
+  }, [nextSlide, currentIndex]) 
 
   return (
     <div className="container mx-auto px-4 py-8 mt-20">
-      <div className="relative overflow-hidden rounded-[2.5rem] border-[6px] border-white ring-1 ring-gray-200 shadow-2xl">
+      {/* UPDATED: Moved bgColor here to the parent so it covers the whole slide */}
+      <div className={`relative overflow-hidden rounded-[2.5rem] border-[6px] border-white ring-1 ring-gray-200 shadow-2xl transition-colors duration-700 ${slides[currentIndex].bgColor}`}>
         <div className="grid grid-cols-1 lg:grid-cols-2 h-[600px] lg:h-[550px] w-full">
+          
           <motion.div
-            className={`relative flex flex-col justify-center items-start px-8 md:px-16 lg:px-20 transition-colors duration-700 ${slides[currentIndex].bgColor}`}
+            // Removed bgColor from here since it's now on the parent
+            className="relative flex flex-col justify-center items-start px-8 md:px-16 lg:px-20 z-10"
           >
             <AnimatePresence mode='wait'>
               <motion.div
@@ -69,7 +72,7 @@ export default function HeroCarousel() {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: 10 }}
                 transition={{ duration: 0.5, ease: "easeOut" }}
-                className="z-10 max-w-lg"
+                className="max-w-lg"
               >
                 <span className={`inline-block py-1.5 px-4 mb-6 text-xs font-extrabold tracking-widest uppercase rounded-full bg-white/40 backdrop-blur-sm border border-white/20 ${slides[currentIndex].textColor}`}>
                   New Drop
@@ -89,7 +92,6 @@ export default function HeroCarousel() {
               </motion.div>
             </AnimatePresence>
 
-            {/* --- MODIFIED INDICATORS (Small Size) --- */}
             <div className="absolute bottom-8 left-8 md:left-20 flex gap-2 z-20">
               {slides.map((_, index) => (
                 <button
@@ -104,7 +106,8 @@ export default function HeroCarousel() {
             </div>
           </motion.div>
 
-          <div className="relative h-full w-full overflow-hidden bg-gray-100">
+          {/* UPDATED: Removed bg-gray-100 so the parent background shows through */}
+          <div className="relative h-full w-full overflow-hidden">
             <AnimatePresence initial={false}>
               <motion.div
                 key={currentIndex}
@@ -114,11 +117,12 @@ export default function HeroCarousel() {
                 transition={{ duration: 1.2, ease: [0.25, 1, 0.5, 1] }} 
                 className="absolute inset-0 w-full h-full" 
               >
+                {/* UPDATED: Added mask-image classes to fade edges */}
                 <img
                   src={slides[currentIndex].image}
                   alt={slides[currentIndex].title}
-                  // Using optimized image sizing: contain on mobile, cover on desktop
-                  className="h-full w-full object-contain lg:object-cover object-center"
+                  // Mobile: fade top edge. Desktop: fade left edge.
+                  className="h-full w-full object-contain lg:object-cover object-center [mask-image:linear-gradient(to_bottom,transparent,black_15%)] lg:[mask-image:linear-gradient(to_right,transparent,black_20%)]"
                 />
               </motion.div>
             </AnimatePresence>
@@ -128,4 +132,4 @@ export default function HeroCarousel() {
       </div>
     </div>
   )
-}
+} 

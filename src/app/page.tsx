@@ -30,6 +30,13 @@ const staggerContainer = {
 }
 
 export default function Home() {
+  // Custom selection for Trending products
+  // Replacing the first item (Casual Tees) with Leather Purse (id: 9)
+  const trendingProducts = [
+    products.find(p => p.id === 9) || products[0], // Leather Purse
+    ...products.slice(1, 4) // Keeps Denim Jeans, Sneakers, Men's Watches
+  ];
+
   return (
     <main className="bg-white min-h-screen">
       <HeroCarousel />
@@ -68,7 +75,7 @@ export default function Home() {
             viewport={{ once: true, margin: "-50px" }}
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8"
           >
-            {products.slice(0, 4).map((product) => (
+            {trendingProducts.map((product) => (
               <motion.div key={product.id} variants={sectionVariants}>
                 <ProductGridCard product={product} />
               </motion.div>
