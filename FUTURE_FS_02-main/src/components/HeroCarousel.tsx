@@ -116,7 +116,7 @@ export default function HeroCarousel() {
                 <img
                   src={slides[currentIndex].image}
                   alt={slides[currentIndex].title}
-                  className="h-full w-full object-cover object-center"
+                  className="h-full w-full object-contain lg:object-cover object-center"
                 />
               </motion.div>
             </AnimatePresence>

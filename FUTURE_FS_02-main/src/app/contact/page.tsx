@@ -47,8 +47,8 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <p className="font-semibold text-slate-900">Email us</p>
-                    <p className="text-slate-500 text-sm">support@futura.com</p>
-                    <p className="text-slate-500 text-sm">careers@futura.com</p>
+                    <p className="text-slate-500 text-sm">support@Apparel Store.com</p>
+                    <p className="text-slate-500 text-sm">careers@Apparel Store.com</p>
                   </div>
                 </div>
 

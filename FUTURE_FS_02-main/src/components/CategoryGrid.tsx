@@ -5,24 +5,24 @@ import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 
 const categories = [
-  {
-    name: 'Shirts',
-    image: '/images/shirts-category.webp',
+  { 
+    name: 'Shirts', 
+    image: '/images/shirts-category.webp', 
     link: '/shop?category=Shirts',
   },
-  {
-    name: 'Jeans',
-    image: '/images/jeans-category.webp',
+  { 
+    name: 'Jeans', 
+    image: '/images/jeans-category.webp', 
     link: '/shop?category=Jeans',
   },
-  {
-    name: 'Accessories',
-    image: '/images/accessories-category.jpg',
+  { 
+    name: 'Accessories', 
+    image: '/images/accessories-category.jpg', 
     link: '/shop?category=Accessories',
   },
-  {
-    name: 'Shoes',
-    image: '/images/shoes-category.jpg',
+  { 
+    name: 'Shoes', 
+    image: '/images/shoes-category.jpg', 
     link: '/shop?category=Shoes',
   },
 ]

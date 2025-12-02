@@ -11,7 +11,7 @@ export default function PrivacyPolicy() {
           <section className="mb-12">
             <h2 className="text-2xl font-bold text-gray-900 mb-4">1. Introduction</h2>
             <p>
-              Welcome to Futura ("we," "our," or "us"). We are committed to protecting your personal information and your right to privacy. If you have any questions or concerns about this privacy notice or our practices with regard to your personal information, please contact us.
+              Welcome to Apparel Store ("we," "our," or "us"). We are committed to protecting your personal information and your right to privacy. If you have any questions or concerns about this privacy notice or our practices with regard to your personal information, please contact us.
             </p>
           </section>
 
@@ -44,7 +44,7 @@ export default function PrivacyPolicy() {
           <section>
             <h2 className="text-2xl font-bold text-gray-900 mb-4">5. Contact Us</h2>
             <p>
-              If you have questions or comments about this policy, you may email us at <span className="font-medium text-indigo-600">support@futura.com</span>.
+              If you have questions or comments about this policy, you may email us at <span className="font-medium text-indigo-600">support@Apparel Store.com</span>.
             </p>
           </section>
         </div>

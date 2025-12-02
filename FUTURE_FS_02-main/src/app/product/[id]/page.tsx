@@ -90,7 +90,7 @@ export default function ProductDetailsPage({ params }: { params: { id: string } 
                         <img 
                           src={selectedImage}
                           alt={product.name} 
-                          className="w-full h-full object-cover transition-opacity duration-300"
+                          className="w-full h-full object-contain lg:object-cover transition-opacity duration-300"
                         />
                         <button className="absolute top-4 right-4 p-2.5 bg-white rounded-full shadow-sm hover:text-red-500 transition-colors">
                             <Heart size={20} />

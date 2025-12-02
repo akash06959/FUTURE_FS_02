@@ -59,7 +59,7 @@ export default function Navbar() {
               <Sparkles size={20} fill="currentColor" />
             </div>
             <span className="text-2xl font-black text-slate-900 tracking-tight">
-              Futura
+              Apparel Store
             </span>
           </Link>
 

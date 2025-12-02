@@ -41,7 +41,7 @@ export default function ProductCard({ product }: ProductCardProps) {
         <img
           src={product.image}
           alt={product.name}
-          className="h-full w-full object-cover object-center mix-blend-multiply transition-transform duration-500 group-hover:scale-105"
+          className="h-full w-full object-contain lg:object-cover object-center mix-blend-multiply transition-transform duration-500 group-hover:scale-105"
         />
         {product.price < 50 && (
           <span className="absolute top-2 left-2 bg-rose-600 text-white text-[10px] font-bold px-2 py-0.5 rounded shadow-sm">

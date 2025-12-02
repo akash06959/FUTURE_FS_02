@@ -63,7 +63,7 @@ export default function Footer() {
             <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-indigo-600/20 text-indigo-400 ring-1 ring-indigo-500/20 transition-all group-hover:bg-indigo-600 group-hover:text-white">
               <Sparkles className="h-5 w-5" />
             </span>
-            <span className="font-serif text-2xl tracking-tight">Futura</span>
+            <span className="font-serif text-2xl tracking-tight">Apparel Store</span>
           </Link>
           <p className="mt-6 text-sm leading-relaxed text-slate-400">
             Elevated essentials for the modern wardrobe. Quality meets design in every detail.
@@ -151,7 +151,7 @@ export default function Footer() {
 
       <div className="mt-16 border-t border-white/5 pt-8">
         <div className="container mx-auto px-4 max-w-6xl flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-slate-600">
-          <p>© {new Date().getFullYear()} Futura Inc. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} Apparel Store Inc. All rights reserved.</p>
           <div className="flex gap-6 text-xs text-gray-500 font-medium">
             <Link href="/privacy-policy" className="hover:text-white transition-colors">
               Privacy Policy

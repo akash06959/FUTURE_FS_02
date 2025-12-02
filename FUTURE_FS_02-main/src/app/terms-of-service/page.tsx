@@ -11,7 +11,7 @@ export default function TermsOfService() {
           <section className="mb-12">
             <h2 className="text-2xl font-bold text-gray-900 mb-4">1. Agreement to Terms</h2>
             <p>
-              These Terms of Use constitute a legally binding agreement made between you, whether personally or on behalf of an entity ("you") and Futura ("we," "us" or "our"), concerning your access to and use of the Futura website as well as any other media form, media channel, mobile website or mobile application related, linked, or otherwise connected thereto.
+              These Terms of Use constitute a legally binding agreement made between you, whether personally or on behalf of an entity ("you") and Apparel Store ("we," "us" or "our"), concerning your access to and use of the Apparel Store website as well as any other media form, media channel, mobile website or mobile application related, linked, or otherwise connected thereto.
             </p>
           </section>
 
@@ -44,7 +44,7 @@ export default function TermsOfService() {
           <section>
             <h2 className="text-2xl font-bold text-gray-900 mb-4">5. Contact Us</h2>
             <p>
-              In order to resolve a complaint regarding the Site or to receive further information regarding use of the Site, please contact us at <span className="font-medium text-indigo-600">support@futura.com</span>.
+              In order to resolve a complaint regarding the Site or to receive further information regarding use of the Site, please contact us at <span className="font-medium text-indigo-600">support@Apparel Store.com</span>.
             </p>
           </section>
         </div>

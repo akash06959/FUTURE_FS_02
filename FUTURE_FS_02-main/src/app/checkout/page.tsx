@@ -74,13 +74,13 @@ export default function Checkout() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-
+    
     if (cart.length === 0) return
     if (!validateForm()) return
 
     setIsSubmitting(true)
     await new Promise((resolve) => setTimeout(resolve, 1500))
-
+    
     clearCart()
     router.push('/order-success')
   }
@@ -136,7 +136,7 @@ export default function Checkout() {
             >
               {step}
             </span>
-          </div>
+            </div>
         ))}
       </div>
 
@@ -154,57 +154,57 @@ export default function Checkout() {
                 <div className="md:col-span-2">
                   <label className="block text-xs font-bold uppercase text-gray-500 mb-2">
                     Full Name
-                  </label>
-                  <input
-                    type="text"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
+              </label>
+              <input
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
                     className={`w-full bg-gray-50 border ${
                       errors.name ? 'border-red-500' : 'border-gray-200'
                     } rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-black transition-all`}
-                    placeholder="John Doe"
-                  />
-                  {errors.name && (
+                placeholder="John Doe"
+              />
+              {errors.name && (
                     <p className="text-red-500 text-xs mt-1">{errors.name}</p>
-                  )}
-                </div>
+              )}
+            </div>
                 <div className="md:col-span-2">
                   <label className="block text-xs font-bold uppercase text-gray-500 mb-2">
                     Email
-                  </label>
-                  <input
-                    type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
+              </label>
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
                     className={`w-full bg-gray-50 border ${
                       errors.email ? 'border-red-500' : 'border-gray-200'
                     } rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-black transition-all`}
-                    placeholder="john@example.com"
-                  />
-                  {errors.email && (
+                placeholder="john@example.com"
+              />
+              {errors.email && (
                     <p className="text-red-500 text-xs mt-1">{errors.email}</p>
-                  )}
-                </div>
+              )}
+            </div>
                 <div className="md:col-span-2">
                   <label className="block text-xs font-bold uppercase text-gray-500 mb-2">
                     Address
-                  </label>
-                  <input
-                    type="text"
-                    name="address"
-                    value={formData.address}
-                    onChange={handleChange}
+              </label>
+              <input
+                type="text"
+                name="address"
+                value={formData.address}
+                onChange={handleChange}
                     className={`w-full bg-gray-50 border ${
                       errors.address ? 'border-red-500' : 'border-gray-200'
                     } rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-black transition-all`}
                     placeholder="123 Main St"
-                  />
-                  {errors.address && (
+              />
+              {errors.address && (
                     <p className="text-red-500 text-xs mt-1">{errors.address}</p>
-                  )}
-                </div>
+              )}
+            </div>
               </div>
             </section>
 
@@ -218,65 +218,65 @@ export default function Checkout() {
                 <div>
                   <label className="block text-xs font-bold uppercase text-gray-500 mb-2">
                     Card Number
-                  </label>
+              </label>
                   <div className="relative">
                     <CreditCard className="absolute left-4 top-3.5 text-gray-400" size={20} />
-                    <input
-                      type="text"
-                      name="cardNumber"
-                      value={formData.cardNumber}
-                      onChange={handleChange}
-                      maxLength={19}
+              <input
+                type="text"
+                name="cardNumber"
+                value={formData.cardNumber}
+                onChange={handleChange}
+                maxLength={19}
                       className={`w-full bg-gray-50 border ${
                         errors.cardNumber ? 'border-red-500' : 'border-gray-200'
                       } rounded-xl pl-12 pr-4 py-3 outline-none focus:ring-2 focus:ring-black transition-all font-mono`}
                       placeholder="0000 0000 0000 0000"
-                    />
+              />
                   </div>
-                  {errors.cardNumber && (
+              {errors.cardNumber && (
                     <p className="text-red-500 text-xs mt-1">{errors.cardNumber}</p>
-                  )}
-                </div>
+              )}
+            </div>
                 <div className="grid grid-cols-2 gap-6">
-                  <div>
+              <div>
                     <label className="block text-xs font-bold uppercase text-gray-500 mb-2">
                       Expiry
-                    </label>
-                    <input
-                      type="text"
-                      name="expiryDate"
-                      value={formData.expiryDate}
-                      onChange={handleChange}
+                </label>
+                <input
+                  type="text"
+                  name="expiryDate"
+                  value={formData.expiryDate}
+                  onChange={handleChange}
                       maxLength={5}
                       className={`w-full bg-gray-50 border ${
                         errors.expiryDate ? 'border-red-500' : 'border-gray-200'
                       } rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-black transition-all text-center`}
-                      placeholder="MM/YY"
-                    />
-                    {errors.expiryDate && (
+                  placeholder="MM/YY"
+                />
+                {errors.expiryDate && (
                       <p className="text-red-500 text-xs mt-1">{errors.expiryDate}</p>
-                    )}
-                  </div>
-                  <div>
+                )}
+              </div>
+              <div>
                     <label className="block text-xs font-bold uppercase text-gray-500 mb-2">
                       CVV
-                    </label>
-                    <input
-                      type="text"
-                      name="cvv"
-                      value={formData.cvv}
-                      onChange={handleChange}
+                </label>
+                <input
+                  type="text"
+                  name="cvv"
+                  value={formData.cvv}
+                  onChange={handleChange}
                       maxLength={4}
                       className={`w-full bg-gray-50 border ${
                         errors.cvv ? 'border-red-500' : 'border-gray-200'
                       } rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-black transition-all text-center`}
-                      placeholder="123"
-                    />
-                    {errors.cvv && (
+                  placeholder="123"
+                />
+                {errors.cvv && (
                       <p className="text-red-500 text-xs mt-1">{errors.cvv}</p>
-                    )}
-                  </div>
-                </div>
+                )}
+              </div>
+            </div>
               </div>
             </section>
 

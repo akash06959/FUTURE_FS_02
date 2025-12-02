@@ -5,8 +5,8 @@ import { useSearchParams, useRouter } from 'next/navigation'
 import { products, Product } from '@/data/products'
 import ProductCard from '@/components/ProductCard'
 import FilterSidebar from '@/components/FilterSidebar'
-import { Filter, X, Search } from 'lucide-react' // Added Search icon
-import { motion, AnimatePresence } from 'framer-motion' // Added Animation library
+import { Filter, X, Search } from 'lucide-react'
+import { motion, AnimatePresence } from 'framer-motion'
 
 type GenderTab = 'Men' | 'Women'
 
@@ -124,7 +124,6 @@ function ShopContent() {
       {/* --- 2. HEADER & CONTROLS --- */}
       <div className="mb-8 flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
         <div>
-          {/* Smooth fade for title change */}
           <motion.h1 
             key={activeGender}
             initial={{ opacity: 0, y: 5 }}
@@ -148,7 +147,7 @@ function ShopContent() {
             }`}
           >
             {showFilters ? <X size={18} /> : <Filter size={18} />}
-            <span>Filters</span>
+            <span>{showFilters ? 'Close' : 'Filters'}</span>
           </button>
           
           <div className="relative w-full sm:w-72 group">
@@ -169,7 +168,44 @@ function ShopContent() {
       {/* --- 3. MAIN LAYOUT --- */}
       <div className="flex items-start gap-8">
         
-        {/* Sidebar (Animated Width) */}
+        {/* OPTION A: MOBILE FILTER DRAWER (Visible only on Mobile) */}
+        <AnimatePresence>
+          {showFilters && (
+            <>
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="fixed inset-0 bg-black/50 z-40 lg:hidden"
+                onClick={() => setShowFilters(false)}
+              />
+              <motion.div
+                initial={{ x: -300 }}
+                animate={{ x: 0 }}
+                exit={{ x: -300 }}
+                transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                className="fixed top-0 left-0 bottom-0 z-50 w-3/4 max-w-xs bg-white p-6 shadow-2xl overflow-y-auto lg:hidden"
+              >
+                <div className="flex items-center justify-between mb-6">
+                  <h2 className="text-xl font-bold">Filters</h2>
+                  <button onClick={() => setShowFilters(false)} className="p-2 bg-gray-100 rounded-full">
+                    <X size={20} />
+                  </button>
+                </div>
+                <FilterSidebar
+                  categories={categories}
+                  selectedCategories={selectedCategories}
+                  price={price}
+                  onCategoryChange={handleCategoryChange}
+                  onPriceChange={handlePriceChange}
+                />
+              </motion.div>
+            </>
+          )}
+        </AnimatePresence>
+
+        {/* OPTION B: DESKTOP SIDEBAR (Visible only on Desktop) */}
+        {/* The 'hidden lg:block' classes ensure this DOM doesn't interfere with mobile */}
         <motion.div
           initial={false}
           animate={{ 
@@ -178,7 +214,7 @@ function ShopContent() {
             marginRight: showFilters ? 16 : 0 
           }}
           transition={{ type: "spring", stiffness: 300, damping: 30 }}
-          className="flex-shrink-0 overflow-hidden"
+          className="flex-shrink-0 overflow-hidden hidden lg:block"
         >
           <div className="w-64 pt-1">
             <FilterSidebar
@@ -193,7 +229,6 @@ function ShopContent() {
 
         {/* Product List (Animated) */}
         <div className="min-w-0 flex-1">
-          {/* layout prop ensures smooth reordering */}
           <motion.div layout className="flex flex-col gap-4">
             <AnimatePresence mode='popLayout'>
               {filteredProducts.length > 0 ? (
